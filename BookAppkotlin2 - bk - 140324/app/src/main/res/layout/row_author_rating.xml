@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/gray03"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    app:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--To show pdf and progress for pdf load-->
+        <LinearLayout
+            android:id="@+id/authorRl"
+            android:gravity="center_vertical"
+            android:background="@color/teal_200"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginEnd="5dp">
+
+            <!--No-->
+            <TextView
+                android:id="@+id/noTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="1"
+                android:layout_marginLeft="10dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+            <!--ProgressBar: Show while pdf is loading-->
+
+        </LinearLayout>
+
+        <!--TextView: Book Title-->
+        <TextView
+            android:id="@+id/nameAuthorTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="Name author"
+            android:layout_toEndOf="@+id/authorRl"
+            android:maxLines="1" />
+
+
+        <!--TextView: phone-->
+        <TextView
+            android:id="@+id/phoneTv"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="phone"
+            android:layout_toEndOf="@+id/authorRl"
+            android:layout_below="@id/nameAuthorTv"
+            android:maxLines="4"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/emailTv"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:layout_toEndOf="@+id/authorRl"
+            android:layout_below="@id/phoneTv"
+            android:maxLines="4"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/dobTv"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date of bird"
+            android:layout_toEndOf="@+id/authorRl"
+            android:layout_below="@id/emailTv"
+            android:maxLines="4"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
