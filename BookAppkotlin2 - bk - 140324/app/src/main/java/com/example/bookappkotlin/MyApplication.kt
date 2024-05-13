@@ -152,6 +152,42 @@ class MyApplication:Application() {
                 })
         }
 
+        fun loadNameAuthor(authorId: String, nameAuthorTv: TextView){
+            val ref = FirebaseDatabase.getInstance().getReference("Authors")
+            ref.child(authorId)
+                .addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //get category
+                        val name = "${snapshot.child("name").value}"
+
+                        //set category
+                        nameAuthorTv.text = name
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+
+        fun loadPhoneAuthor(authorId: String, phoneAuthorTv: TextView){
+            val ref = FirebaseDatabase.getInstance().getReference("Authors")
+            ref.child(authorId)
+                .addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //get category
+                        val name = "${snapshot.child("phone").value}"
+
+                        //set category
+                        phoneAuthorTv.text = name
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+
         fun deleteBook(context: Context, bookId: String, bookUrl: String, bookTitle: String){
             //param details
             //1) context, used when require e.g. for progressdialog, toast
@@ -194,6 +230,34 @@ class MyApplication:Application() {
                 .addOnFailureListener {e->
                     progressDialog.dismiss()
                     Log.d(TAG, "deleteBook: Failed to delete from storage due to ${e.message}")
+                    Toast.makeText(context, "Failed to delete due to ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        //delete author
+        fun deleteAuthor(context: Context, authorId: String){
+            val TAG = "DELETE_BOOK_TAG"
+
+            Log.d(TAG, "deleteBook: deleting...")
+
+            //progress dialog
+            val progressDialog = ProgressDialog(context)
+            progressDialog.setTitle("Please wait")
+            progressDialog.setMessage("Deleting...")
+            progressDialog.setCanceledOnTouchOutside(false)
+            progressDialog.show()
+
+            val ref = FirebaseDatabase.getInstance().getReference("Authors")
+            ref.child(authorId)
+                .removeValue()
+                .addOnSuccessListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(context, "Successfully deleted...", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "deleteAuthor: Deleted from db..")
+                }
+                .addOnFailureListener { e->
+                    progressDialog.dismiss()
+                    Log.d(TAG, "deleteAuthor: Failed to delete from db due to ${e.message}")
                     Toast.makeText(context, "Failed to delete due to ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }

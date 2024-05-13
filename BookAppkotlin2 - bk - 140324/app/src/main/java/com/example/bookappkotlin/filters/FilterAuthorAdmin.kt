@@ -2,19 +2,20 @@ package com.example.bookappkotlin.filters
 
 import android.widget.Filter
 import com.example.bookappkotlin.adapters.AdapterAuthor
+import com.example.bookappkotlin.adapters.AdapterAuthorAdmin
 import com.example.bookappkotlin.models.ModelAuthor
 
-class FilterAuthor: Filter {
+class FilterAuthorAdmin: Filter {
 
     //arraylist in which we want to search
     private var filterList: ArrayList<ModelAuthor>
     //adapter in which filter need to be implemented
-    private var adapterAuthor: AdapterAuthor
+    private var adapterAuthorAdmin: AdapterAuthorAdmin
 
     //constructor
-    constructor(filterList: ArrayList<ModelAuthor>, adapterAuthor: AdapterAuthor) : super() {
+    constructor(filterList: ArrayList<ModelAuthor>, adapterAuthorAdmin: AdapterAuthorAdmin) : super() {
         this.filterList = filterList
-        this.adapterAuthor = adapterAuthor
+        this.adapterAuthorAdmin = adapterAuthorAdmin
     }
     override fun performFiltering(constraint: CharSequence?): FilterResults {
         var constraint = constraint
@@ -49,10 +50,10 @@ class FilterAuthor: Filter {
 
     override fun publishResults(constraint: CharSequence?, results: FilterResults) {
         //apply filter changes
-        adapterAuthor.authorsArrayList = results.values as ArrayList<ModelAuthor>
+        adapterAuthorAdmin.authorsArrayList = results.values as ArrayList<ModelAuthor>
 
         //notify changes
-        adapterAuthor.notifyDataSetChanged()
+        adapterAuthorAdmin.notifyDataSetChanged()
     }
 
 }

@@ -383,6 +383,7 @@ class PdfDetailActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     //get Data
                     val categoryId = "${snapshot.child("categoryId").value}"
+                    val authorId = "${snapshot.child("authorId").value}"
                     val description = "${snapshot.child("description").value}"
                     val downloadsCount = "${snapshot.child("downloadsCount").value}"
                     val timestamp = "${snapshot.child("timestamp").value}"
@@ -394,6 +395,8 @@ class PdfDetailActivity : AppCompatActivity() {
                     //format data
                     val date = MyApplication.formatTimeStamp(timestamp.toLong())
 
+                    //load name author
+                    MyApplication.loadNameAuthor(authorId, binding.nameAuthorTv)
                     //load pdf category
                     MyApplication.loadCategory(categoryId, binding.categoryTv)
                     //load pdf thumbnail, pages count

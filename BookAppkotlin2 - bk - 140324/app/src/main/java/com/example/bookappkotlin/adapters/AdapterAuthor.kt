@@ -9,11 +9,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookappkotlin.databinding.RowAuthorRatingBinding
-import com.example.bookappkotlin.databinding.RowPdfViewedBinding
 import com.example.bookappkotlin.filters.FilterAuthor
-import com.example.bookappkotlin.filters.FilterPdfUser
 import com.example.bookappkotlin.models.ModelAuthor
-import com.example.bookappkotlin.models.ModelPdf
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

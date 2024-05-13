@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".MyApplication"
@@ -15,16 +15,24 @@
         android:roundIcon="@drawable/logo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        tools:targetApi="31">
+        tools:targetApi="29">
+        <activity
+            android:name=".activities.AuthorEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AuthorListActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.AuthorAddActivity"
             android:exported="false" />
         <activity
             android:name=".activities.RecommendAuthorActivity"
             android:exported="false" />
-        <!--<activity
+        <!--
+<activity
             android:name=".BooksRatingUserFragment"
-            android:exported="false" />-->
+            android:exported="false" />
+        -->
         <activity
             android:name=".activities.ProfileEditActivity"
             android:exported="false" />

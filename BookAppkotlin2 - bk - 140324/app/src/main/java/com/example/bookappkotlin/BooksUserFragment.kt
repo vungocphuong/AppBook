@@ -91,8 +91,8 @@ class BooksUserFragment : Fragment{
             idBooksRe.clear()
             matrixRecommendBooks(object : FirebaseCallback{
                 override fun onCallback(arrayList: ArrayList<String>) {
-                    Log.d("mang da check", bids.toString())
-                    Log.d("mang da check", uids.toString())
+                    Log.d("mang bid da check", bids.toString())
+                    Log.d("mang uid da check", uids.toString())
                     var matrixY = Array(uids.size) { DoubleArray(bids.size) }
                     for (i in 0 until bids.size){
                         val ref2 = FirebaseDatabase.getInstance().getReference("Books")
@@ -123,7 +123,7 @@ class BooksUserFragment : Fragment{
                                     Log.d("kich thuoc", "${matrixY.size} ${matrixY[0].size}")
                                     for (i in 0 until matrixY.size){
                                         for (j in 0 until matrixY[i].size){
-                                            Log.d("ma tran", "Matrix[$i][$j]"+matrixY[i][j].toString())
+                                            Log.d("ma tran Y", "Matrix[$i][$j]"+matrixY[i][j].toString())
                                         }
                                     }
                                     if(i == bids.size-1){

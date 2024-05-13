@@ -57,6 +57,7 @@ class MyApplication1: android.app.Application() {
                     if(matrixY[i][j]!=0.0){
                         matrixY_[i][j]=  "%.2f".format(matrixY[i][j]-sum/count).toDouble()
                     }
+                    Log.d("ma tran Y_", "Matrix[$i][$j]"+matrixY_[i][j].toString())
                 }
             }
             /*for (i in matrixY_.indices) {
@@ -76,6 +77,7 @@ class MyApplication1: android.app.Application() {
                     val similarity = cosineSimilarity(matrixY_[i], matrixY_[j])
                     val roundedValue = "%.2f".format(similarity)
                     matrixS[i][j] = roundedValue.toDouble()
+                    Log.d("ma tran S", "Matrix[$i][$j]"+matrixS[i][j].toString())
                 }
             }
 
@@ -97,8 +99,8 @@ class MyApplication1: android.app.Application() {
                         var b: Double = 0.0
                         var max1: Double=-1.0
                         var max2: Double=-1.0
-                        var indexMax1: Int
-                        var indexMax2: Int
+                        var indexMax1: Int = 0
+                        var indexMax2: Int = 0
                         for(k in 0 until matrixY_.size){
                             if(matrixY_[k][j] != 0.0){
                                 if(matrixS[i][k] >= max1){
@@ -117,6 +119,7 @@ class MyApplication1: android.app.Application() {
                     }else{
                         matrixY__[i][j] = matrixY_[i][j]
                     }
+                    Log.d("ma tran Y__", "Matrix[$i][$j]"+matrixY__[i][j].toString())
                 }
             }
 
@@ -142,6 +145,7 @@ class MyApplication1: android.app.Application() {
                         }
                     }
                     matrixF[i][j] = "%.2f".format(matrixY__[i][j]+sum/count).toDouble()
+                    Log.d("ma tran F", "Matrix[$i][$j]"+matrixF[i][j].toString())
                 }
             }
 

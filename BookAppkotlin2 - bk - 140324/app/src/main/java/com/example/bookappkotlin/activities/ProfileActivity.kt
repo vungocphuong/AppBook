@@ -37,7 +37,8 @@ class ProfileActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         loadUserInfo()
-        loadFavoriteBooks()
+        //loadFavoriteBooks()
+        loadViewedBooks()
 
         //handle click, go back
         binding.backBtn.setOnClickListener {
@@ -93,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
             })
     }
 
-    private fun loadFavoriteBooks(){
+    private fun loadViewedBooks(){
         //init arraylist
         booksArrayList = ArrayList()
 

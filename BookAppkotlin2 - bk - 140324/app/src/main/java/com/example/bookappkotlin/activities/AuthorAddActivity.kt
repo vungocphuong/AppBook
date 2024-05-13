@@ -2,6 +2,7 @@ package com.example.bookappkotlin.activities
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -78,6 +79,11 @@ class AuthorAddActivity : AppCompatActivity() {
         //handle click, begin upload
         binding.submitBtn.setOnClickListener {
             validateData()
+        }
+
+        //handle click, open profile
+        binding.listBtn.setOnClickListener {
+            startActivity(Intent(this, AuthorListActivity::class.java))
         }
     }
 

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.bookappkotlin.MyApplication
 import com.example.bookappkotlin.databinding.ActivityPdfEditBinding
+import com.example.bookappkotlin.models.ModelAuthor
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -33,6 +35,10 @@ class PdfEditActivity : AppCompatActivity() {
     //arraylist to hold category ids
     private lateinit var categoryIdArrayList:ArrayList<String>
 
+    private lateinit var authorArrayList: ArrayList<ModelAuthor>
+    private lateinit var nameAuthorArrayList: ArrayList<String>
+    private lateinit var idAuthorArrayList: ArrayList<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPdfEditBinding.inflate(layoutInflater)
@@ -48,7 +54,7 @@ class PdfEditActivity : AppCompatActivity() {
 
         loadCategories()
         loadBookInfo()
-
+        loadAuthors()
         //handle click, goback
         binding.backBtn.setOnClickListener {
             onBackPressed()
@@ -76,10 +82,13 @@ class PdfEditActivity : AppCompatActivity() {
                     selectedCategoryId = snapshot.child("categoryId").value.toString()
                     val description = snapshot.child("description").value.toString()
                     val title = snapshot.child("title").value.toString()
+                    val authorId = snapshot.child("authorId").value.toString()
 
                     //set to views
                     binding.titleEt.setText(title)
                     binding.descriptionEt.setText(description)
+                    MyApplication.loadNameAuthor(authorId, binding.authorEt)
+                    MyApplication.loadPhoneAuthor(authorId, binding.phoneEt)
 
                     //load book category info using categoryId
                     Log.d(TAG, "onDataChange: Loading book category info")
@@ -105,13 +114,46 @@ class PdfEditActivity : AppCompatActivity() {
             })
     }
 
+    private fun loadAuthors() {
+        Log.d(TAG, "loadAuthor: Loading authors")
+        //init arraylist
+        authorArrayList = ArrayList()
+        nameAuthorArrayList = ArrayList()
+        //db reference to load categories DB -> Categories
+        val ref = FirebaseDatabase.getInstance().getReference("Authors")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //clear list before adding data
+                authorArrayList.clear()
+                nameAuthorArrayList.clear()
+                for (ds in snapshot.children){
+                    //get data
+                    val model = ds.getValue(ModelAuthor::class.java)
+                    //add to arraylist
+                    authorArrayList.add(model!!)
+                    nameAuthorArrayList.add(model.name)
+                    Log.d(TAG, "onDataChange: ${model.name}")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 
     private var title = ""
     private var description = ""
+    private var nameAuthor = ""
+    private var authorId = ""
+    private var phone = ""
+
     private fun validateData() {
         //get data
         title = binding.titleEt.text.toString().trim()
         description = binding.descriptionEt.text.toString().trim()
+        nameAuthor = binding.authorEt.text.toString().trim()
+        phone = binding.phoneEt.text.toString().trim()
 
         //validate data
         if(title.isEmpty()){
@@ -120,12 +162,40 @@ class PdfEditActivity : AppCompatActivity() {
         else if(description.isEmpty()){
             Toast.makeText(this, "Enter Description", Toast.LENGTH_SHORT).show()
         }
+        else if(nameAuthor.isEmpty()){
+            Toast.makeText(this, "Enter name author...", Toast.LENGTH_SHORT).show()
+        }
+        else if(phone.isEmpty()){
+            Toast.makeText(this, "Enter phone author...", Toast.LENGTH_SHORT).show()
+        }
         else if(selectedCategoryId.isEmpty()){
             Toast.makeText(this, "Pick Category", Toast.LENGTH_SHORT).show()
         }
+        else if(nameAuthor in nameAuthorArrayList == false){
+            Toast.makeText(this, "Author name doesn't exist ...", Toast.LENGTH_SHORT).show()
+        }
+        else if(check() == false){
+            Toast.makeText(this, "Phone numbers do not match ...", Toast.LENGTH_SHORT).show()
+        }
         else{
+            for (i in 0 until authorArrayList.size){
+                if(nameAuthor.equals(authorArrayList[i].name) && phone.equals(authorArrayList[i].phone)){
+                    authorId = authorArrayList[i].id
+                }
+            }
             updatePdf()
         }
+    }
+
+    private fun check(): Boolean{
+        for(i in 0 until authorArrayList.size){
+            if(nameAuthor.equals(authorArrayList[i].name)){
+                if(phone.equals(authorArrayList[i].phone)){
+                    return true;
+                }
+            }
+        }
+        return false
     }
 
     private fun updatePdf() {
@@ -140,6 +210,7 @@ class PdfEditActivity : AppCompatActivity() {
         hashMap["title"] = "$title"
         hashMap["description"] = "$description"
         hashMap["categoryId"] = "$selectedCategoryId"
+        hashMap["authorId"] = "$authorId"
 
         //start updating
         val ref = FirebaseDatabase.getInstance().getReference("Books")

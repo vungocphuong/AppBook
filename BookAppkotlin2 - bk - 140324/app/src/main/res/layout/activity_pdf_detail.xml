@@ -91,6 +91,24 @@
                     android:layout_below="@id/titleTv"
                     android:layout_toEndOf="@id/pdfRl">
 
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/nameAuthorLabelTv"
+                            style="@style/TextAppearance.MaterialComponents.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Name Author"
+                            android:layout_marginEnd="5dp"/>
+                        <TextView
+                            android:id="@+id/nameAuthorTv"
+                            android:layout_weight="1"
+                            style="@style/TextAppearance.MaterialComponents.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:layout_marginEnd="5dp"/>
+                    </TableRow>
+
                     <!--Category Row-->
                     <TableRow>
                         <TextView
